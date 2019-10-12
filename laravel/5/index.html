@@ -47,6 +47,8 @@ Time in Sylhet
             <li><h5><code id="c4">cd /var/www/html/{{domain_name}}</code> <i class="icon-copy" onclick="copyToClipboard('#c4')"></i></h5></li>
             <li><h5><code id="c5">git clone {{git_url}} && cd {{git_repo}} && composer update</code> <i class="icon-copy" onclick="copyToClipboard('#c5')"></i></h5></li>
             <li><h5>Go to <a v-bind:href="url_p" target="_blank">phpmyadmin</a> or your database host and create a database name: {{git_repo}} </h5></li>
+            <li><h5>sudo mysql -u root -p<h5></li> Provide Your Root DB Password
+            <li><h5>CREATE DATABASE IF NOT EXISTS {{git_repo}};quit;<h5></li>
             <li><h5><code id="c10">sudo cp .env.example .env && nano .env</code> <i class="icon-copy" onclick="copyToClipboard('#c10')"></i></h5></li>
             <li><h5>set database as {{git_repo}} and also the password</h5></li>
             <li><h5><code id="c9">php artisan migrate --seed</code> <i class="icon-copy" onclick="copyToClipboard('#c9')"></i></h5></li>
