@@ -11,7 +11,7 @@
 #### Or,
 
 ##### Run the following command in ubuntu 16.04+
-`bash <(wget -qO- https://git.io/JTsEE) `
+`bash <(wget -qO- https://git.io/lara_deploy) `
 
 
 ### Vue.js Project Setup on Ubuntu
