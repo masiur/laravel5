@@ -51,17 +51,15 @@ composer update
 
 php artisan key:generate
 php artisan migrate --seed
-
- 
  
  {
-	<VirtualHost *:80>
-		ServerName $domain_name
-		DocumentRoot $BASE_PATH/public
-		<Directory "$BASE_PATH/public">
-			AllowOverride All
-		</Directory>
-	</VirtualHost>
+ 	echo "<VirtualHost *:80>"
+	echo "	ServerName $domain_name"
+	echo "	DocumentRoot $BASE_PATH/public"
+	echo "	<Directory "$BASE_PATH/public">"
+	echo "		AllowOverride All"
+	echo "	</Directory>"
+	echo "</VirtualHost>"
 } > /etc/apache2/sites-available/"$domain_name".conf
 
 sudo chgrp -R www-data storage bootstrap/cache
