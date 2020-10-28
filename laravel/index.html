@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="description" content="Laravel 8/7/6//5 App setup on Linux">
+    <meta name="keywords" content="Laravel, Server, Setup,  Ubuntu, Linux, LAMP, Apache, Debian, CentOS">
+    <meta name="author" content="Masiur Rahman Siddiki">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <title>VPS || Laravel setup On LAMP Server</title>
+</head>
+<body>
+<!-- Setup by Masiur Rahman Siddiki -->
+<!-- Setup by mrsiddiki AT gmail DOT com -->
+
+-->
+<div class="container">
+    <div id="app">
+
+        <h2 align=center>Laravel setup On LEMP Server</h2>
+        <h5 align=center><a href="http://scdnlab.com/vps">Click For LAMP</a></h5>
+        <p align=center><i class="icon-copy"></i> icon indicates Copy to Clipboard</p>
+        <br>
+        <div class="row">
+            <div class="col-md-5">
+                <h4 align=center>Domain Name<input v-model.trim="domain_name" placeholder="example.com" class="form-control" type="text" ></h4>
+            </div>
+            <div class="col-md-6 col-md-offset-1">
+                <h4 align=center>Git URL</br> <input placeholder="http://example.com.git" class="form-control" type="text" v-model="git_url"></h4>
+            </div>
+        </div>
+
+        <p>Execute the Steps serially</p>
+        <ol class="list-group">
+            <li><h5><code id="c1">sudo apt-get update</code> <i class="icon-copy" onclick="copyToClipboard('#c1')"></i></h5></li>
+            <li><h5><code id="c2">sudo mkdir -p /var/www/html/{{ domain_name }}</code> <i class="icon-copy" onclick="copyToClipboard('#c2')"></i></h5></li>
+            <li><h5><code id="c3">sudo chown -R $USER:$USER /var/www/html/{{domain_name}}</code> <i class="icon-copy" onclick="copyToClipboard('#c3')"></i></h5></li>
+            <li><h5><code id="c4">cd /var/www/html/{{domain_name}}</code> <i class="icon-copy" onclick="copyToClipboard('#c4')"></i></h5></li>
+            <li><h5><code id="c5">git clone {{git_url}} && cd {{git_repo}} && composer update</code> <i class="icon-copy" onclick="copyToClipboard('#c5')"></i></h5></li>
+            
+            <li><h5><code id="c7">sudo mysql -u root -p</code> <i class="icon-copy" onclick="copyToClipboard('#c7')"></i></h5></li>
+            <li><h5><code id="c20">CREATE DATABASE IF NOT EXISTS {{git_repo}};quit;</code> <i class="icon-copy" onclick="copyToClipboard('#c7')"></i></h5></li>
+ 
+            <li><h5><code id="c10">sudo cp .env.example .env && nano .env</code> <i class="icon-copy" onclick="copyToClipboard('#c10')"></i></h5></li>
+            <li><h5>set database as {{git_repo}} and also the password</h5></li>
+            <li><h5><code id="c9">php artisan migrate --seed</code> <i class="icon-copy" onclick="copyToClipboard('#c9')"></i></h5></li>
+            <li><h5><code id="c6">sudo chgrp -R www-data storage bootstrap/cache</code> <i class="icon-copy" onclick="copyToClipboard('#c6')"></i></h5></li>
+            <li><h5><code id="c7">sudo chmod -R ug+rwx storage bootstrap/cache</code> <i class="icon-copy" onclick="copyToClipboard('#c7')"></i></h5></li>
+            <li><h5><code id="c11">sudo nano /etc/nginx/sites-available/{{domain_name}}</code> <i class="icon-copy" onclick="copyToClipboard('#c11')"></i></h5></li>
+            <li><h5>Paste the following code. </h5>
+            <xmp>
+                server {
+                    listen 80;
+                    listen [::]:80;
+                    root /var/www/html/{{domain_name}}/{{git_repo}}/public;
+                    index index.php index.html index.htm index.nginx-debian.html;
+                    server_name {{domain_name}} www.{{domain_name}};
+                    location / {
+                        try_files $uri $uri/ /index.php?$query_string;
+                    }
+                    location ~ \.php$ {
+                        include snippets/fastcgi-php.conf;
+                        fastcgi_pass unix:/run/php/php7.2-fpm.sock;
+                    }
+                    location ~ /\.ht {
+                        deny all;
+                    }
+                }
+            </xmp>
+            </li>
+            <li><h5><code id="c13">sudo ln -s /etc/nginx/sites-available/{{domain_name}} /etc/nginx/sites-enabled/ && sudo systemctl reload nginx</code> <i class="icon-copy" onclick="copyToClipboard('#c13')"></i></h5></li>
+            <li><h5><code id="c15">cd /var/www/html/{{domain_name}}/{{git_repo}}/</code> <i class="icon-copy" onclick="copyToClipboard('#c15')"></i></h5></li>
+            <li><h5><code id="c16">sudo chmod -R 777 storage && sudo chmod -R 777 public && sudo chmod -R 777 bootstrap/cache</code> <i class="icon-copy" onclick="copyToClipboard('#c16')"></i></h5></li>
+            <li><h5>Finally Check if the site is okay ! ~~ <a v-bind:href="base_url" target="_blank">{{domain_name}}</a></h5></li>
+
+        </ol>
+
+    </div>
+
+    <footer>
+        <div align="center">
+            <div  >
+
+                <small class="copyright">Masiur Rahman  Siddiki &copy;2019 Sylhet, Bangladesh</small>
+
+            </div>
+        </div>
+    </footer>
+
+</div>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+<!--<script src="vue.js"></script>-->
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            domain_name : '',
+            git_url : ''
+        },
+        computed: {
+            git_repo: function (git_url) {
+                let rev =  this.git_url.split('/');
+                rev =  rev.reverse()[0];
+                return rev.split('.')[0];
+            },
+            url_p: function(domain_name) {
+                return 'http://' + this.domain_name + '/phpmyadmin';
+            },
+            base_url: function (domain_name) {
+                return 'http://'+this.domain_name;
+            }
+        }
+    })
+
+   
+</script>
+
+</body>
+</html>
