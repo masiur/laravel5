@@ -10,7 +10,7 @@ sudo chown -R $USER:$USER /var/www/html/$domain_name
 cd /var/www/html/$domain_name
 read -p 'Git Repo Full Url:' git_url
 git clone $git_url
-cd $(ls -d */|head -n 1) #First directory on list
+cd $(ls -d */|head -n 1) # First directory on list meaning child directory under it
 BASE_PATH=$PWD
 
 echo "Please enter the NAME of the new MySQL database! (example: database1)"
@@ -44,7 +44,7 @@ else
 fi
 
 cp .env.example .env
-sed -i "/DB_DATABASE/c DB_DATABASE=$MAINDB" .env
+sed -i "/DB_DATABASE/c DB_DATABASE=$MAINDB" .env # this command find the keyword and replace entire line 
 sed -i "/DB_USERNAME/c DB_USERNAME=$MAINDB//" .env
 sed -i "/DB_PASSWORD/c DB_PASSWORD=$PASSWDDB" .env
 composer update
