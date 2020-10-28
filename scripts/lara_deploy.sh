@@ -1,6 +1,13 @@
 #!/bin/bash
 
 echo "Deploy Laravel on Ubuntu hassle-free | by masiursiddiki.com\n"
+detectDistroAndVersion() {
+	VERSION=$(awk -F= '/^VERSION_ID/{print $2}' /etc/os-release)
+	NAME=$(awk -F= '/^NAME/{print $2}' /etc/os-release)
+}
+detectDistroAndVersion
+
+
 echo ""
 read -p "Domain Name Eg. example.com:" DOMAIN_NAME
 
