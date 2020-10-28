@@ -96,7 +96,7 @@ echo "MySQL Database Username: $MAINDB"
 echo "MySQL Database Name: $MAINDB"
 echo "MySQL DB Password: $PASSWDDB"
 
-echo "Visit http://${DOMAIN_NAME}"
+echo "Visit http://$DOMAIN_NAME"
 
 echo "----------------------------"
 exit
