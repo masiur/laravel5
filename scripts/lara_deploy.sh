@@ -8,6 +8,7 @@ sudo mkdir -p /var/www/html/$domain_name
 sudo chown -R $USER:$USER /var/www/html/$DOMAIN_NAME
 
 cd /var/www/html/$DOMAIN_NAME
+DOMAIN_DIR=$PWD #Full Path of /var/www/html/$DOMAIN_NAME
 
 echo "Please enter Full URL of your Git Repository\n"
 read -p 'Repository URL: ' GIT_URL
@@ -64,21 +65,38 @@ php artisan migrate --seed # Laravel Migration & Database Seed
 
 #sudo touch /etc/apache2/sites-available/"$domain_name".conf
 # Creating VirtualHost Configuration File for $domain_name
- {
- 	echo "<VirtualHost *:80>"
-	echo "	ServerName $DOMAIN_NAME"
-	echo "	DocumentRoot $BASE_PATH/public"
-	echo "	<Directory "$BASE_PATH/public">"
-	echo "		AllowOverride All"
-	echo "	</Directory>"
-	echo "</VirtualHost>"
-} > /etc/apache2/sites-available/"$DOMAIN_NAME".conf
+sudo echo "
+ 	<VirtualHost *:80>
+	ServerName $DOMAIN_NAME
+	DocumentRoot $BASE_PATH/public
+	<Directory "$BASE_PATH/public">
+		Options Indexes FollowSymLinks
+		AllowOverride All
+		Require all granted
+	</Directory>
+	LogLevel info ssl:warn
+	ErrorLog $DOMAIN_DIR/logs/error.log
+	CustomLog $DOMAIN_DIR/logs/access.log $DOMAIN_NAME
+	</VirtualHost>
+	" > /etc/apache2/sites-available/"$DOMAIN_NAME".conf
+# Enable The Domain
+sudo a2ensite $domain_name.conf
 
 sudo chgrp -R www-data storage bootstrap/cache # directory belongs to www-data group ( as it is apache)
 sudo chmod -R ug+rwx storage bootstrap/cache 
 sudo chmod -R 777 storage && sudo chmod -R 777 public && sudo chmod -R 777 bootstrap/cache
 
-echo "Visit http://${DOMAIN_NAME}"
+
+echo " "
+echo "----------------------------"
+echo "You have successfully created the domain : $DOMAIN_NAME"
+echo "Error & Access logs directory: $DOMAIN_DIR/logs"
+
 echo "MySQL Database Username: $MAINDB"
 echo "MySQL Database Name: $MAINDB"
 echo "MySQL DB Password: $PASSWDDB"
+
+echo "Visit http://${DOMAIN_NAME}"
+
+echo "----------------------------"
+exit
