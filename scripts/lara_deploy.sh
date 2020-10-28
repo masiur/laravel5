@@ -19,6 +19,9 @@ cd $(ls -d */|head -n 1)
 # Print Working Directory. It prints the path of the working directory, starting from the root
 BASE_PATH=$PWD 
 
+
+
+# Begin database , username & password creation
 echo "Please enter the NAME of the new MySQL database! (example: database1)"
 read -p "Project Database Name: " MAINDB
 #echo "Please enter the MySQL database CHARACTER SET! (example: latin1, utf8, ...)"
@@ -48,12 +51,13 @@ else
     mysql -uroot -p${ROOT_PASSWORD} -e "GRANT ALL PRIVILEGES ON ${MAINDB}.* TO '${MAINDB}'@'localhost';"
     mysql -uroot -p${ROOT_PASSWORD} -e "FLUSH PRIVILEGES;"
 fi
+# End database , username & password creation
 
 cp .env.example .env #copy .env.example file to new file .env
 sed -i "/DB_DATABASE/c DB_DATABASE=$MAINDB" .env # this command find the keyword and replace entire line 
-sed -i "/DB_USERNAME/c DB_USERNAME=$MAINDB//" .env
+sed -i "/DB_USERNAME/c DB_USERNAME=$MAINDB" .env
 sed -i "/DB_PASSWORD/c DB_PASSWORD=$PASSWDDB" .env
-composer update
+composer update  # updating composer 
 
 php artisan key:generate # Laravel Key Generate
 php artisan migrate --seed # Laravel Migration & Database Seed
