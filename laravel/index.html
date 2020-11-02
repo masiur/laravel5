@@ -14,6 +14,10 @@
 <!--10:08 PM-->
 <!--Wednesday, October 28, 2020 (GMT+6)-->
 <!--Time in Khulia Para, Sylhet-->
+
+<!-- major update 1 : 11:13 AM
+Monday, November 2, 2020 (GMT+6) -->
+
 <div class="container">
     <div id="app">
         <h2 align=center>Laravel Deployment/Setup On {{serverType}}</h2>
@@ -55,8 +59,9 @@
             </div>
             
             <div v-if="server == 'apache'" class="col-sm-12 col-md-12">
-                    <span>You can just paste the following command in your bash. (Warning: This is beta version)</span>
-                    <pre>bash <(wget -qO- https://git.io/JTswy)</pre>         
+			<br>
+                    <span>You can just paste the following command in your bash. (**Warning: This is beta version)</span>
+                    <pre>bash <(wget -qO- https://git.io/JTswy) ## Paste this into bash</pre>         
             </div>    
 
         </div>
@@ -67,7 +72,7 @@
             <ol class="list-group">
 
                 <div class="col-md-6">
-                    <p>Execute the Steps serially</p>
+                    <p> <strong v-if="server == 'apache'">Or,</strong><br> Execute the Steps serially</p>
 
                     <li><pre>sudo apt-get update</pre></li>
                     <li><pre>sudo mkdir -p /var/www/html/{{ domain_name }}</pre></li>
