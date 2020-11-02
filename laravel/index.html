@@ -16,7 +16,6 @@
 <!--Time in Khulia Para, Sylhet-->
 <div class="container">
     <div id="app">
-
         <h2 align=center>Laravel Deployment/Setup On {{serverType}}</h2>
         <br>
         <div class="row">
@@ -54,6 +53,14 @@
                     <input placeholder="http://github.com/user/repository.git" class="form-control" type="text" v-model="git_url" id="git_url">
                 </div>
             </div>
+            
+            <div v-if="server == 'apache'" class="col-sm-4 col-md-4">
+                    <span>You can just paste the following command in your bash. (Warning: This is beta version)</span>
+                    <pre>bash <(wget -qO- https://git.io/JTswy)</pre>         
+            </div>
+            
+            
+            bash <(wget -qO- https://git.io/JTswy)
 
         </div>
 
@@ -202,6 +209,7 @@ server {
                 if (this.server == 'nginx') {
                     return 'LEMP';
                 }
+                return '';
             }
 
         }
