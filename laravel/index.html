@@ -6,7 +6,7 @@
     <meta name="author" content="Masiur Rahman Siddiki">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-    <title>VPS || Laravel setup On LAMP Server</title>
+    <title>VPS || Laravel Deployment On Server</title>
 </head>
 <body>
 <!-- Setup by Masiur Rahman Siddiki -->
@@ -17,8 +17,7 @@
 <div class="container">
     <div id="app">
 
-        <h2 align=center>Laravel setup On Server</h2>
-        <!--        <h5 align=center><a href="http://scdnlab.com/vps">Click For LAMP</a>-->
+        <h2 align=center>Laravel Deployment/Setup On {{serverType}}</h2>
         <br>
         <div class="row">
             <div class="col-sm-4 col-md-4 form-inline">
@@ -195,6 +194,14 @@ server {
             currentYear: function () {
                 let d = new Date();
                 return d.getFullYear();
+            },
+            serverType: function () {
+                if (this.server == 'apache') {
+                    return 'LAMP';
+                }
+                if (this.server == 'nginx') {
+                    return 'LEMP';
+                }
             }
 
         }
